@@ -51,7 +51,7 @@ def add_book(information):
         list1.append(information)
         id_list.append(information[0])
     else:
-        print("Список уже содержит книгу с данным id")
+        print("Библиотека уже содержит книгу с id " + information[0])
 
 
 def remove_book(id_book):
@@ -65,9 +65,9 @@ def remove_book(id_book):
             id_list.pop(i)
             break
     if not remove:
-        print("Книга не найдена")
+        print("Книга с id " + id_book + " не найдена в библиотеке")
     else:
-        print("Книга удалена")
+        print("Книга c id " + id_book + " удалена из библиотеки")
 
 
 def author_list():
@@ -111,7 +111,8 @@ def sort1(tree):
 
 def main():
     while True:
-        print("\n[1] - Посмотреть список книг"
+        print("\nМеню:"
+              "\n[1] - Посмотреть список книг"
               "\n[2] - Добавить новую книгу"
               "\n[3] - Удалить книгу"
               "\n[4] - Сортировка книг по году издания"
@@ -121,11 +122,12 @@ def main():
         if inp == 1:
             print_lib()
         if inp == 2:
-            print("Введите инфо о книге: ")
+            print("Введите информация о книге о книге в формате"
+                  "(id : Название : ФИО автора : год издания : количество): ")
             info = input()
             add_book(info)
         if inp == 3:
-            print("Введите id книги: ")
+            print("Введите id книги для удаления: ")
             id_book = input()
             remove_book(id_book)
         if inp == 4:

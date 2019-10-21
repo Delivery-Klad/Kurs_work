@@ -71,6 +71,7 @@ def remove_book(id_book):
 
 
 def author_list():
+    Author_List.clear()
     for i in range(len(list1)):
         print_lst = str(list1[i])
         str1 = print_lst.split(' : ')
@@ -87,7 +88,6 @@ def tree_builder():
         Data_List.append(str1[3])
     for j in range(len(Data_List)):
         tree = insert(tree, Data_List[j])
-    print(tree)
     sorted_tree(tree)
 
 

@@ -45,14 +45,14 @@ class LinkedList:  # класс списка
     def clear(self):  # функция очистки linked list
         self.__init__()
 
-    def len(self):  # функция рассчета размена linked list
+    def len(self):  # функция подсчета размена linked list
         self.length = 0
         if self.head is not None:
             self.length += 1
             cur = self.head
-            while cur.next is not None:
+            while cur.next is not None:  # перебор элементов для подсчета длины
                 cur = cur.next
-                self.length += 1
+                self.length += 1  # подсчет длины linked list
         return self.length
 
     def add(self, data):  # функция добавления элемента в linked list
@@ -68,7 +68,7 @@ class LinkedList:  # класс списка
             return
         cur = self.head
         for i in range(list2.len()):
-            while cur is not None:
+            while cur is not None:  # перебор элементов для проверки, существует ли введенный id в linked list
                 temp1 = cur.value.split(' : ')
                 if split_book[0] == temp1[0]:
                     messagebox.showerror("IdError", "Библиотека уже содежит книгу с введенным id " + split_book[0])
@@ -85,22 +85,15 @@ class LinkedList:  # класс списка
         text_authors.place_forget()
         label_authors.place_forget()
         cur = self.head
-        y = -1
         can = False
-        while cur is not None:
+        while cur is not None:  # перебор элементов списка для нахождения индекса в списке
             temp1 = cur.value.split(' : ')
-            y += 1
-            if temp1[0] == index:
+            if temp1[0] == index:  # проверка наличия индекса в linked list
                 can = True
                 break
             cur = cur.next
-        if can:
+        if can:  # если индекс существует в linked list, то происходит его удаление
             current = self.head
-            if current is not None:
-                temp2 = current.value.split(' : ')
-                if temp2[0] == index:
-                    self.head = current.next
-                    return
             while current is not None:
                 temp2 = current.value.split(' : ')
                 if temp2[0] == index:
@@ -113,13 +106,13 @@ class LinkedList:  # класс списка
         else:
             messagebox.showerror("InputError", "Введен некорректный id")
 
-    def print(self):  # функция вывода linked list
+    def print(self):  # функция вывода linked list на форму
         text_authors.place_forget()
         label_authors.place_forget()
         text_list.configure(state="normal")
         text_list.delete(1.0, tk.END)
         cur = self.head
-        while cur is not None:
+        while cur is not None:  # перебор элементов linked list для вывода на форму
             tmp = str(cur.value).split(" : ")
             text_list.insert(0.0, "id: " + tmp[0] + " Название: " + tmp[1] + " Автор: " + tmp[2] + " Год: " + tmp[3] +
                              " Кол-во: " + tmp[4])
@@ -133,7 +126,7 @@ class LinkedList:  # класс списка
         text_authors.delete(1.0, tk.END)
         text_authors.place(relx=0.74, rely=0.4)
         label_authors.place(relx=0.75, rely=0.401, relwidth=0.20, relheight=0.03)
-        while cur is not None:
+        while cur is not None:  # перебор элементов linked list для вывода списка авторов на форму
             temp1 = cur.value.split(' : ')
             text_authors.insert(0.0, " " + temp1[2])
             text_authors.insert(0.0, '\n')
@@ -168,25 +161,24 @@ def tree_builder():  # функция постоения дерева
     label_authors.place_forget()
     tree = None
     list2.tree_sort()
-    for l in range(len(list1)):
+    for l in range(len(list1)):  # формирование дерева
         split_tree = str(list1[l]).split(' : ')
         Data_List.append(split_tree[3])
-    for j in range(len(Data_List)):
-        tree = insert(tree, Data_List[j])
-    sorted_tree(tree)
+        tree = insert(tree, Data_List[l])
+    sorted_tree(tree)  # вызов функции сортировки
 
 
 def sorted_tree(tree):  # функция сортировки linked list
     for l in range(len(Data_List)):
         for j in range(len(Data_List)):
             try:
-                if sort(tree)[l] == Data_List[j]:
-                    Sorted_list.append(list1[j])
+                if sort(tree)[l] == Data_List[j]:  # сравнение каждого элемента дерева с каждым элементом списка дат
+                    Sorted_list.append(list1[j])  # формирование буферного отсортированного списка
             except IndexError:
                 pass
     list2.clear()
     for l in range(len(Sorted_list)):
-        list2.add(Sorted_list[l])
+        list2.add(Sorted_list[l])  # заполнение linked list элементами буферного списка
     list2.print()
     Data_List.clear()
     Sorted_list.clear()
@@ -208,7 +200,7 @@ def add_book():  # функция добавления книги в библи�
         buff += entry_author.get() + " : "
         buff += entry_year.get() + " : "
         buff += entry_count.get()
-        list2.add(buff)
+        list2.add(buff)  # добавление книги в linked list
     else:
         messagebox.showerror("InputError", "Все поля должны быть заполнены")
     list2.print()

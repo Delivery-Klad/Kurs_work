@@ -14,14 +14,14 @@ text_authors.place()
 text_authors.place_forget()
 
 
-class TreeNode:
+class TreeNode:  # класс дерева
     def __init__(self, data, left=None, right=None):
         self.data = data
         self.left = left
         self.right = right
 
 
-def insert(tree, data):
+def insert(tree, data):  # функция вставки элемента в дерево
     if not tree:
         tree = TreeNode(data)
     elif data < tree.data:
@@ -31,21 +31,21 @@ def insert(tree, data):
     return tree
 
 
-class ListNode:
+class ListNode:  # класс ячейки
     def __init__(self, value=None):
         self.value = value
         self.next = None
 
 
-class LinkedList:
+class LinkedList:  # класс списка
     def __init__(self):
         self.head = None
         self.length = 0
 
-    def clear(self):
+    def clear(self):  # функция очистки linked list
         self.__init__()
 
-    def len(self):
+    def len(self):  # функция рассчета размена linked list
         self.length = 0
         if self.head is not None:
             self.length += 1
@@ -55,15 +55,15 @@ class LinkedList:
                 self.length += 1
         return self.length
 
-    def add(self, data):
+    def add(self, data):  # функция добавления элемента в linked list
         split_book = data.split(' : ')
-        if not split_book[3].isdigit():
+        if not split_book[3].isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Год издания должен быть указан числом")
             return
-        if not split_book[4].isdigit():
+        if not split_book[4].isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Кол-во экземпляров должно быть указано числом")
             return
-        if not split_book[0].isdigit():
+        if not split_book[0].isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Id должен быть указан числом")
             return
         cur = self.head
@@ -78,8 +78,8 @@ class LinkedList:
         NewNode.next = self.head
         self.head = NewNode
 
-    def del_element(self, index):
-        if not str(index).isdigit():
+    def del_element(self, index):  # функция удаления элемента из linkedlist
+        if not str(index).isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Id для удаления должен быть указан числом")
             return
         text_authors.place_forget()
@@ -113,7 +113,7 @@ class LinkedList:
         else:
             messagebox.showerror("InputError", "Введен некорректный id")
 
-    def print(self):
+    def print(self):  # функция вывода linked list
         text_authors.place_forget()
         label_authors.place_forget()
         text_list.configure(state="normal")
@@ -127,7 +127,7 @@ class LinkedList:
             cur = cur.next
         text_list.configure(state="disabled")
 
-    def author(self):
+    def author(self):  # функция вывода списка авторов
         cur = self.head
         text_authors.configure(state="normal")
         text_authors.delete(1.0, tk.END)
@@ -140,7 +140,7 @@ class LinkedList:
             cur = cur.next
         text_authors.configure(state="disabled")
 
-    def tree_sort(self):
+    def tree_sort(self):  # функция сортировки с помощью двоичного дерева
         list1.clear()
         cur = self.head
         while cur is not None:
@@ -149,7 +149,7 @@ class LinkedList:
 
 
 list2 = LinkedList()
-with open('lib.txt', encoding="utf8") as f:
+with open('lib.txt', encoding="utf8") as f:  # заполнение библиотеки из файла
     list1 = f.read().splitlines()
 text_list.configure(state="normal")
 for el in range(len(list1)):
@@ -158,12 +158,12 @@ list1.reverse()
 for ele in range(len(list1)):
     tmp1 = str(list1[ele]).split(" : ")
     text_list.insert(0.0, "id: " + tmp1[0] + " Название: " + tmp1[1] + " Автор: " + tmp1[2] + " Год: " + tmp1[
-        3] + " Кол-во: " + tmp1[4])
+        3] + " Кол-во: " + tmp1[4])  # вывод списка книг на форму
     text_list.insert(0.0, '\n')
 text_list.configure(state="disabled")
 
 
-def tree_builder():
+def tree_builder():  # функция постоения дерева
     text_authors.place_forget()
     label_authors.place_forget()
     tree = None
@@ -176,7 +176,7 @@ def tree_builder():
     sorted_tree(tree)
 
 
-def sorted_tree(tree):
+def sorted_tree(tree):  # функция сортировки linked list
     for l in range(len(Data_List)):
         for j in range(len(Data_List)):
             try:
@@ -192,13 +192,13 @@ def sorted_tree(tree):
     Sorted_list.clear()
 
 
-def sort(tree):
+def sort(tree):  # функция сортировки дерева
     if not tree:
         return []
     return sort(tree.right) + [tree.data] + sort(tree.left)
 
 
-def add_book():
+def add_book():  # функция добавления книги в библиотеку
     text_authors.place_forget()
     label_authors.place_forget()
     if len(entry_id.get()) != 0 and len(entry_title.get()) != 0 and len(entry_author.get()) != 0 and \
@@ -214,7 +214,7 @@ def add_book():
     list2.print()
 
 
-# region UI
+# region UI создание графического интерфейса
 label_name = tk.Label(root, font=12, text="Список книг в библиотеке:", fg='black', bg='white')
 label_name.place(relx=0.4, rely=0.051, relwidth=0.50, relheight=0.03)
 

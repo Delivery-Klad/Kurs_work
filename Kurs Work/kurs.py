@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
-Data_List = []
-Sorted_list = []
+Data_List = []  # список дат
+Sorted_list = []  # временный список для сортировки
 root = tk.Tk()
 text_list = tk.Text(root, font=12, width=70, height=25)
 text_list.configure(state="disabled")
@@ -37,25 +37,25 @@ class ListNode:  # класс ячейки
         self.next = None
 
 
-class LinkedList:  # класс списка
+class LinkedList:  # класс односвязного списка
     def __init__(self):
         self.head = None
         self.length = 0
 
-    def clear(self):  # функция очистки linked list
+    def clear(self):  # функция очистки односвязного списка
         self.__init__()
 
-    def len(self):  # функция подсчета размена linked list
+    def len(self):  # функция подсчета размена односвязного списка
         self.length = 0
         if self.head is not None:
             self.length += 1
             cur = self.head
             while cur.next is not None:  # перебор элементов для подсчета длины
                 cur = cur.next
-                self.length += 1  # подсчет длины linked list
+                self.length += 1  # подсчет длины односвязного списка
         return self.length
 
-    def add(self, data):  # функция добавления элемента в linked list
+    def add(self, data):  # функция добавления элемента в односвязный список
         split_book = data.split(' : ')
         if not split_book[3].isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Год издания должен быть указан числом")
@@ -68,7 +68,7 @@ class LinkedList:  # класс списка
             return
         cur = self.head
         for i in range(list2.len()):
-            while cur is not None:  # перебор элементов для проверки, существует ли введенный id в linked list
+            while cur is not None:  # перебор элементов для проверки, существует ли введенный id в односвязном списке
                 temp1 = cur.value.split(' : ')
                 if split_book[0] == temp1[0]:
                     messagebox.showerror("IdError", "Библиотека уже содежит книгу с введенным id " + split_book[0])
@@ -78,7 +78,7 @@ class LinkedList:  # класс списка
         NewNode.next = self.head
         self.head = NewNode
 
-    def del_element(self, index):  # функция удаления элемента из linkedlist
+    def del_element(self, index):  # функция удаления элемента из односвязного списка
         if not str(index).isdigit():  # проверка правильности введенных данных
             messagebox.showerror("TypeError", "Id для удаления должен быть указан числом")
             return
@@ -88,11 +88,11 @@ class LinkedList:  # класс списка
         can = False
         while cur is not None:  # перебор элементов списка для нахождения индекса в списке
             temp1 = cur.value.split(' : ')
-            if temp1[0] == index:  # проверка наличия индекса в linked list
+            if temp1[0] == index:  # проверка наличия индекса в односвязном списке
                 can = True
                 break
             cur = cur.next
-        if can:  # если индекс существует в linked list, то происходит его удаление
+        if can:  # если индекс существует в односвязном списке, то происходит его удаление
             current = self.head
             while current is not None:
                 temp2 = current.value.split(' : ')
@@ -106,13 +106,13 @@ class LinkedList:  # класс списка
         else:
             messagebox.showerror("InputError", "Введен некорректный id")
 
-    def print(self):  # функция вывода linked list на форму
+    def print(self):  # функция вывода односвязного списка на форму
         text_authors.place_forget()
         label_authors.place_forget()
         text_list.configure(state="normal")
         text_list.delete(1.0, tk.END)
         cur = self.head
-        while cur is not None:  # перебор элементов linked list для вывода на форму
+        while cur is not None:  # перебор элементов односвязного списка для вывода на форму
             tmp = str(cur.value).split(" : ")
             text_list.insert(0.0, "id: " + tmp[0] + " Название: " + tmp[1] + " Автор: " + tmp[2] + " Год: " + tmp[3] +
                              " Кол-во: " + tmp[4])
@@ -126,7 +126,7 @@ class LinkedList:  # класс списка
         text_authors.delete(1.0, tk.END)
         text_authors.place(relx=0.74, rely=0.4)
         label_authors.place(relx=0.75, rely=0.401, relwidth=0.20, relheight=0.03)
-        while cur is not None:  # перебор элементов linked list для вывода списка авторов на форму
+        while cur is not None:  # перебор элементов односвязного списка для вывода списка авторов на форму
             temp1 = cur.value.split(' : ')
             text_authors.insert(0.0, " " + temp1[2])
             text_authors.insert(0.0, '\n')
@@ -148,10 +148,10 @@ text_list.configure(state="normal")
 for el in range(len(list1)):
     list2.add(list1[el])
 list1.reverse()
-for ele in range(len(list1)):
+for ele in range(len(list1)):  # вывод списка книг на форму
     tmp1 = str(list1[ele]).split(" : ")
     text_list.insert(0.0, "id: " + tmp1[0] + " Название: " + tmp1[1] + " Автор: " + tmp1[2] + " Год: " + tmp1[
-        3] + " Кол-во: " + tmp1[4])  # вывод списка книг на форму
+        3] + " Кол-во: " + tmp1[4])  
     text_list.insert(0.0, '\n')
 text_list.configure(state="disabled")
 
@@ -184,7 +184,7 @@ def sorted_tree(tree):  # функция сортировки linked list
     Sorted_list.clear()
 
 
-def sort(tree):  # функция сортировки дерева
+def sort(tree):  # рекурсивная функция сортировки дерева
     if not tree:
         return []
     return sort(tree.right) + [tree.data] + sort(tree.left)

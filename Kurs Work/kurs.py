@@ -85,6 +85,10 @@ class LinkedList:  # класс односвязного списка
         text_authors.place_forget()
         label_authors.place_forget()
         cur = self.head
+        temp2 = cur.value.split(' : ')
+        if temp2[0] == index:
+            self.head = cur.next
+            return
         can = False
         while cur is not None:  # перебор элементов списка для нахождения индекса в списке
             temp1 = cur.value.split(' : ')

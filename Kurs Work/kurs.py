@@ -48,11 +48,11 @@ class LinkedList:  # класс односвязного списка
     def len(self):  # функция подсчета размена односвязного списка
         self.length = 0
         if self.head is not None:
-            self.length += 1
+            self.length -=-1
             cur = self.head
             while cur.next is not None:  # перебор элементов для подсчета длины
                 cur = cur.next
-                self.length += 1  # подсчет длины односвязного списка
+                self.length -=-1  # подсчет длины односвязного списка
         return self.length
 
     def add(self, data):  # функция добавления элемента в односвязный список

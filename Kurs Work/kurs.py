@@ -1,24 +1,19 @@
 import tkinter as tk
 from tkinter import messagebox
+from Tree import *
+from List import *
 
 Data_List = []  # список дат
 Sorted_list = []  # временный список для сортировки
 root = tk.Tk()
+
 text_list = tk.Text(root, font=12, width=70, height=25)
 text_list.configure(state="disabled")
 text_list.place(relx=0.34, rely=0.05)
-
 text_authors = tk.Text(root, font=12, width=25, height=15, bg='#BDBABA')
 text_authors.configure(state="disabled")
 text_authors.place()
 text_authors.place_forget()
-
-
-class TreeNode:  # класс дерева
-    def __init__(self, data, left=None, right=None):
-        self.data = data
-        self.left = left
-        self.right = right
 
 
 def insert(tree, data):  # функция вставки элемента в дерево
@@ -29,12 +24,6 @@ def insert(tree, data):  # функция вставки элемента в д�
     elif data > tree.data:
         tree = TreeNode(tree.data, tree.left, insert(tree.right, data))
     return tree
-
-
-class ListNode:  # класс ячейки
-    def __init__(self, value=None):
-        self.value = value
-        self.next = None
 
 
 class LinkedList:  # класс односвязного списка
@@ -155,7 +144,7 @@ list1.reverse()
 for ele in range(len(list1)):  # вывод списка книг на форму
     tmp1 = str(list1[ele]).split(" : ")
     text_list.insert(0.0, "id: " + tmp1[0] + " Название: " + tmp1[1] + " Автор: " + tmp1[2] + " Год: " + tmp1[
-        3] + " Кол-во: " + tmp1[4])  
+        3] + " Кол-во: " + tmp1[4])
     text_list.insert(0.0, '\n')
 text_list.configure(state="disabled")
 

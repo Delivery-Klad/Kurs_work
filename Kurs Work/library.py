@@ -10,7 +10,7 @@ root = tk.Tk()
 text_list = tk.Text(root, font=12, width=70, height=25)
 text_list.configure(state="disabled")
 text_list.place(relx=0.34, rely=0.05)
-text_authors = tk.Text(root, font=12, width=25, height=15, bg='#BDBABA')
+text_authors = tk.Text(root, font=12, width=25, height=22.35, bg='#BDBABA')
 text_authors.configure(state="disabled")
 text_authors.place()
 text_authors.place_forget()
@@ -37,11 +37,11 @@ class LinkedList:  # класс односвязного списка
     def len(self):  # функция подсчета размена односвязного списка
         self.length = 0
         if self.head is not None:
-            self.length -=-1
+            self.length -= -1
             cur = self.head
             while cur.next is not None:  # перебор элементов для подсчета длины
                 cur = cur.next
-                self.length -=-1  # подсчет длины односвязного списка
+                self.length -= -1  # подсчет длины односвязного списка
         return self.length
 
     def add(self, data):  # функция добавления элемента в односвязный список
@@ -117,8 +117,8 @@ class LinkedList:  # класс односвязного списка
         cur = self.head
         text_authors.configure(state="normal")
         text_authors.delete(1.0, tk.END)
-        text_authors.place(relx=0.74, rely=0.4)
-        label_authors.place(relx=0.75, rely=0.401, relwidth=0.20, relheight=0.03)
+        text_authors.place(relx=0.74, rely=0.1)
+        label_authors.place(relx=0.75, rely=0.101, relwidth=0.20, relheight=0.03)
         while cur is not None:  # перебор элементов односвязного списка для вывода списка авторов на форму
             temp1 = cur.value.split(' : ')
             text_authors.insert(0.0, " " + temp1[2])
@@ -126,34 +126,34 @@ class LinkedList:  # класс односвязного списка
             cur = cur.next
         text_authors.configure(state="disabled")
 
-    def tree_sort(self):  # функция сортировки с помощью двоичного дерева
-        list1.clear()
+    def tree_sort(self, list):  # функция сортировки с помощью двоичного дерева
+        list.clear()
         cur = self.head
         while cur is not None:
-            list1.append(cur.value)
+            list.append(cur.value)
             cur = cur.next
 
 
-list2 = LinkedList()
-with open('lib.txt', encoding="utf8") as f:  # заполнение библиотеки из файла
-    list1 = f.read().splitlines()
-text_list.configure(state="normal")
-for el in range(len(list1)):
-    list2.add(list1[el])
-list1.reverse()
-for ele in range(len(list1)):  # вывод списка книг на форму
-    tmp1 = str(list1[ele]).split(" : ")
-    text_list.insert(0.0, "id: " + tmp1[0] + " Название: " + tmp1[1] + " Автор: " + tmp1[2] + " Год: " + tmp1[
-        3] + " Кол-во: " + tmp1[4])
-    text_list.insert(0.0, '\n')
-text_list.configure(state="disabled")
+def autoFill():
+    with open('lib.txt', encoding="utf8") as f:  # заполнение библиотеки из файла
+        list1 = f.read().splitlines()
+    text_list.configure(state="normal")
+    for el in range(len(list1)):
+        list2.add(list1[el])
+    list1.reverse()
+    for ele in range(len(list1)):  # вывод списка книг на форму
+        tmp1 = str(list1[ele]).split(" : ")
+        text_list.insert(0.0, "id: " + tmp1[0] + " Название: " + tmp1[1] + " Автор: " + tmp1[2] + " Год: " + tmp1[
+            3] + " Кол-во: " + tmp1[4])
+        text_list.insert(0.0, '\n')
+    text_list.configure(state="disabled")
 
 
 def tree_builder():  # функция постоения дерева
     text_authors.place_forget()
     label_authors.place_forget()
     tree = None
-    list2.tree_sort()
+    list2.tree_sort(list1)
     for l in range(len(list1)):  # формирование дерева
         split_tree = str(list1[l]).split(' : ')
         Data_List.append(split_tree[3])
@@ -199,12 +199,17 @@ def add_book():  # функция добавления книги в библи�
     list2.print()
 
 
+list1 = []
+list2 = LinkedList()
 # region UI создание графического интерфейса
 label_name = tk.Label(root, font=12, text="Список книг в библиотеке:", fg='black', bg='white')
 label_name.place(relx=0.4, rely=0.051, relwidth=0.50, relheight=0.03)
 
 button_add = tk.Button(root, text="Добавить", bg='#2E8B57', command=lambda: (add_book(), list2.print()))
 button_add.place(relx=0.07, rely=0.40, relwidth=0.20, relheight=0.05)
+
+button_add = tk.Button(root, text="Автозаполнение", bg='#2E8B57', command=lambda: (list2.clear(), autoFill(), list2.print()))
+button_add.place(relx=0.07, rely=0.47, relwidth=0.20, relheight=0.05)
 
 button_print = tk.Button(root, text="Очистить", bg='#8A0808', command=lambda: (list2.clear(), list2.print()))
 button_print.place(relx=0.07, rely=0.91, relwidth=0.20, relheight=0.05)
@@ -214,7 +219,7 @@ button_sort.place(relx=0.07, rely=0.84, relwidth=0.20, relheight=0.05)
 
 button_del = tk.Button(root, text="Удалить", bg='#8A0808', command=lambda: (list2.del_element(entry_del.get()),
                                                                             list2.print()))
-button_del.place(relx=0.07, rely=0.62, relwidth=0.20, relheight=0.05)
+button_del.place(relx=0.07, rely=0.67, relwidth=0.20, relheight=0.05)
 
 button_authors = tk.Button(root, text="Список авторов", bg='#2E8B57', command=lambda: list2.author())
 button_authors.place(relx=0.07, rely=0.77, relwidth=0.20, relheight=0.05)
@@ -235,7 +240,7 @@ entry_count = tk.Entry(root, font=12)
 entry_count.place(relx=0.07, rely=0.33, relwidth=0.20, relheight=0.05)
 
 entry_del = tk.Entry(root, font=12)
-entry_del.place(relx=0.07, rely=0.55, relwidth=0.20, relheight=0.05)
+entry_del.place(relx=0.07, rely=0.6, relwidth=0.20, relheight=0.05)
 
 label_id = tk.Label(root, font=12, text="Id:", fg='black')
 label_id.place(relx=0.045, rely=0.05)
@@ -253,7 +258,7 @@ label_count = tk.Label(root, font=12, text="Кол-во:", fg='black')
 label_count.place(relx=0.01, rely=0.33)
 
 label_del_id = tk.Label(root, font=12, text="Id для удаления:", fg='black')
-label_del_id.place(relx=0.07, rely=0.5, relwidth=0.20, relheight=0.05)
+label_del_id.place(relx=0.07, rely=0.55, relwidth=0.20, relheight=0.05)
 
 label_authors = tk.Label(root, font=12, text="Список авторов:", fg='black', bg='#BDBABA')
 label_authors.place()

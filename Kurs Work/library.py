@@ -126,11 +126,11 @@ class LinkedList:  # класс односвязного списка
             cur = cur.next
         text_authors.configure(state="disabled")
 
-    def tree_sort(self, list):  # функция сортировки с помощью двоичного дерева
-        list.clear()
+    def tree_sort(self, ):  # функция сортировки с помощью двоичного дерева
+        list1.clear()
         cur = self.head
         while cur is not None:
-            list.append(cur.value)
+            list1.append(cur.value)
             cur = cur.next
 
 
@@ -153,7 +153,7 @@ def tree_builder():  # функция постоения дерева
     text_authors.place_forget()
     label_authors.place_forget()
     tree = None
-    list2.tree_sort(list1)
+    list2.tree_sort()
     for l in range(len(list1)):  # формирование дерева
         split_tree = str(list1[l]).split(' : ')
         Data_List.append(split_tree[3])
